@@ -1,0 +1,176 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Common functions for rules
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return request.auth.token.role == 'admin';
+    }
+    
+    function isSchoolAdmin() {
+      return request.auth.token.role == 'school_admin';
+    }
+    
+    function isTeacher() {
+      return request.auth.token.role == 'teacher';
+    }
+    
+    function isStudent() {
+      return request.auth.token.role == 'student';
+    }
+
+    function isParent() {
+      return request.auth.token.role == 'parent';
+    }
+    
+    // School-Teacher Relationships
+    match /school_teacher_relationships/{relationshipId} {
+      allow create: if isSignedIn() && isSchoolAdmin() && 
+                      request.resource.data.schoolAdminEmail == request.auth.token.email;
+      allow read: if isSignedIn() && 
+                    ( (isSchoolAdmin() && resource.data.schoolAdminEmail == request.auth.token.email) || isAdmin() );
+      allow delete: if isSignedIn() &&
+                      ( (isSchoolAdmin() && resource.data.schoolAdminEmail == request.auth.token.email) || isAdmin() );
+      allow update: if false; 
+    }
+
+    // Teacher-Student Relationships
+    match /teacher_student_relationships/{relationshipId} {
+      allow create: if isSignedIn() && isTeacher() && 
+                      request.resource.data.teacherEmail == request.auth.token.email;
+      allow read: if isSignedIn() && 
+                    ( (isTeacher() && resource.data.teacherEmail == request.auth.token.email) || 
+                      isSchoolAdmin() || 
+                      isAdmin() );
+      allow delete: if isSignedIn() &&
+                      ( (isTeacher() && resource.data.teacherEmail == request.auth.token.email) || 
+                        isSchoolAdmin() || 
+                        isAdmin() );
+      allow update: if false;
+    }
+
+    // Schools collection
+    match /schools/{schoolId} {
+      allow read: if isSignedIn() && (isAdmin() || isSchoolAdmin() || isTeacher());
+      allow create: if false; 
+      allow update: if isAdmin() || (isSchoolAdmin() && resource.data.primaryAdminUid == request.auth.uid);
+      allow delete: if isAdmin(); 
+    }
+    
+    // User profiles collection
+    match /users/{userId} {
+      allow read: if isSignedIn() && (isAdmin() || isSchoolAdmin() || isOwner(userId)); // Allow user to read own profile
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && isOwner(userId) &&
+                     !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'children']);
+      allow update: if isSignedIn() && (isAdmin() || isSchoolAdmin()) &&
+                     request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']);
+      allow delete: if isSignedIn() && (isAdmin() || isSchoolAdmin());
+    }
+
+    // Student-specific collections (No changes needed here for now)
+    match /students/{studentId}/{document=**} {
+      allow read, write: if isSignedIn() && isOwner(studentId) && isStudent();
+      allow read: if isSignedIn() && (isTeacher() || isSchoolAdmin() || isAdmin());
+      allow write: if isSignedIn() && (isTeacher() || isSchoolAdmin() || isAdmin());
+    }
+    
+    // Songs collection
+    match /songs/{songId} {
+      allow read: if isSignedIn() && (
+                    (isTeacher() && resource.data.creatorId == request.auth.uid) ||
+                    isStudent() || 
+                    isAdmin() || isSchoolAdmin() ||
+                    (isParent() && resource.data.creatorId == request.auth.uid)
+                  );
+      allow create: if false; 
+      allow update: if isSignedIn() && request.auth.uid == resource.data.creatorId; 
+      allow delete: if isSignedIn() && ( (isTeacher() && resource.data.creatorId == request.auth.uid) || isAdmin() || isSchoolAdmin() );
+    }
+
+    // Song Assignments collection
+    match /song_assignments/{assignmentId} {
+       allow read: if isSignedIn() && 
+                     ( (isTeacher() && resource.data.assignedByTeacherId == request.auth.uid) ||
+                       (isStudent() && resource.data.studentId == request.auth.uid) ||
+                       (isParent() && exists(/databases/$(database)/documents/parent_student_relationships/$(request.auth.uid + '_' + resource.data.studentId))) ||
+                       isAdmin() || isSchoolAdmin() );
+       allow create: if isSignedIn() && 
+                       ( (isTeacher() && request.resource.data.assignedByTeacherId == request.auth.uid) ||
+                         (isParent() && request.resource.data.assignedByRole == 'parent' && request.resource.data.assignedByTeacherId == request.auth.uid) );
+       allow delete: if isSignedIn() && 
+                       ( (isTeacher() && resource.data.assignedByTeacherId == request.auth.uid) ||
+                         (isParent() && resource.data.assignedByRole == 'parent' && resource.data.assignedByTeacherId == request.auth.uid) ||
+                         isAdmin() || isSchoolAdmin() );
+       allow update: if false;
+    }
+    
+    // Class/group management (No changes needed here for now)
+    match /classes/{classId} {
+      allow create, update, delete: if isSignedIn() && (isTeacher() || isSchoolAdmin() || isAdmin());
+      allow read: if isSignedIn() && (
+        isTeacher() || 
+        isSchoolAdmin() || 
+        isAdmin() || 
+        exists(/databases/$(database)/documents/classes/$(classId)/members/$(request.auth.uid))
+      );
+      
+      match /members/{memberId} {
+        allow read: if isSignedIn() && (
+          isTeacher() || 
+          isSchoolAdmin() || 
+          isAdmin() || 
+          memberId == request.auth.uid
+        );
+        allow write: if isSignedIn() && (isTeacher() || isSchoolAdmin() || isAdmin());
+      }
+    }
+
+    // Rules for quizzes
+    match /quizzes/{quizId} {
+      allow read: if isSignedIn(); // Any authenticated user can read quiz details (e.g., student taking it, parent reviewing)
+      allow create: if isSignedIn() && isTeacher() && request.auth.uid == request.resource.data.creatorId;
+      allow update: if isSignedIn() && isTeacher() && request.auth.uid == resource.data.creatorId;
+      allow delete: if isSignedIn() && isTeacher() && request.auth.uid == resource.data.creatorId;
+    }
+
+    // Rules for quiz_assignments
+    match /quiz_assignments/{assignmentId} {
+      // Student can read their own assignments. Teacher can read assignments they made. Parent can read for linked children (checked in API).
+      allow read: if isSignedIn() && 
+                    ( (isStudent() && request.auth.uid == resource.data.studentId) ||
+                      (isTeacher() && request.auth.uid == resource.data.assignedByTeacherId) ||
+                      isParent() || // Parent access is further filtered by API
+                      isAdmin() ); 
+      allow create: if isSignedIn() && isTeacher() && request.auth.uid == request.resource.data.assignedByTeacherId;
+      // Student can update their own assignment to 'completed' and add score/answers.
+      allow update: if isSignedIn() && isStudent() && request.auth.uid == resource.data.studentId &&
+                      request.resource.data.status == 'completed' &&
+                      !request.resource.data.diff(resource.data).affectedKeys().hasAny(['quizId', 'studentId', 'assignedByTeacherId', 'assignedAt', 'totalQuestions']);
+      allow delete: if isSignedIn() && isTeacher() && request.auth.uid == resource.data.assignedByTeacherId;
+    }
+
+    // Rules for parent_linking_codes
+    match /parent_linking_codes/{code} {
+      // Student can create their own code.
+      allow create: if isSignedIn() && isStudent() && request.auth.uid == request.resource.data.studentUid;
+      // Parent (via backend) needs to read to verify. Student might read to display.
+      allow read: if isSignedIn() && (isStudent() && request.auth.uid == resource.data.studentUid || isParent());
+      // Backend (service account) updates status to 'used' or 'expired'.
+      allow update: if false; // Handled by backend with admin privileges
+      allow delete: if false; // Codes expire or are marked 'used'
+    }
+
+    // Default deny all - explicitly deny everything unless allowed above
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
