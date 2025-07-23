@@ -1,5 +1,5 @@
 // API route to handle class creation and retrieval for teachers; allows authenticated teachers to create new classes or fetch their own classes from Firestore.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { ClassData } from '@/types';

@@ -1,5 +1,7 @@
 // API route for parents to fetch detailed insights on completed quiz assignments for their linked children, including quiz titles, scores, and teacher/student names.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { QuizAssignment } from '@/types';

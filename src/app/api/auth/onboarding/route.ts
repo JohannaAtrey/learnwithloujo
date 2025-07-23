@@ -1,5 +1,5 @@
 // API endpoint to finalize school admin onboarding after Stripe payment: creates user, sets role, stores metadata, and returns a custom Firebase token.
-
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { db } from '@/lib/firebase-admin';

@@ -1,5 +1,7 @@
 // API route to finalize school admin signup after Stripe checkout: verifies session, creates a Firebase Auth user, and stores initial user info in Firestore.
 
+export const dynamic = 'force-dynamic';
+
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { db } from '@/lib/firebase-admin';

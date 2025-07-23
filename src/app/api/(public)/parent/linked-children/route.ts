@@ -1,5 +1,7 @@
 // API route for parents to retrieve detailed information about their linked children, including names and emails, by verifying their token and querying Firestore.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { User } from '@/types'; 

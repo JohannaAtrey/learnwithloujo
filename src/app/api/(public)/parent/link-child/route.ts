@@ -1,5 +1,7 @@
 // API route for parents to link a child account using a one-time linking code; validates the code, updates the parent's record, and marks the code as used.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';

@@ -1,5 +1,5 @@
 // API endpoint to create a public Stripe checkout session for school subscriptions, used during onboarding without requiring authentication.
-
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 

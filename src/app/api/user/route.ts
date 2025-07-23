@@ -1,6 +1,6 @@
 // API endpoint to retrieve authenticated user's profile and subscription metadata from Firestore.
 // Requires a valid Firebase ID token in the Authorization header.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 

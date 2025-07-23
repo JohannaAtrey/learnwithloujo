@@ -1,5 +1,5 @@
 // API route to retrieve details of a specific quiz assignment by ID; accessible to the assigned student or the assigning teacher, with authentication and authorization checks.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { QuizAssignment } from '@/types'; // Only need assignment type here

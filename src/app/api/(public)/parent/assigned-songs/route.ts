@@ -1,5 +1,7 @@
 // API route for parents to retrieve songs assigned to their children; supports optional filtering by childId and returns song details with assignment info.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { db, auth } from '@/lib/firebase-admin';
 

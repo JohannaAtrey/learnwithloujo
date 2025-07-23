@@ -1,5 +1,5 @@
 // API route to verify a Stripe Checkout session using a session ID; returns session details and associated user info from Firestore (if available).
-
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { db } from '@/lib/firebase-admin';

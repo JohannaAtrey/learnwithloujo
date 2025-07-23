@@ -2,7 +2,7 @@
 // - GET retrieves a list of students managed by the teacher
 // - POST adds, removes, or creates a student and links them
 // - DELETE removes a student-teacher relationship by ID
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/firebase-admin';
 import { db } from '@/lib/firebase-admin';

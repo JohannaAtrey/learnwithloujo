@@ -1,5 +1,5 @@
 // API endpoint to verify if a Stripe checkout session was successfully completed and paid.
-
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 

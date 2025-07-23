@@ -1,7 +1,7 @@
 import { downloadAndSaveSong, getSongByWorkId, updateSong } from '@/lib/services/songs';
 import { SongData } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
-
+export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 export async function POST(req: NextRequest) {

@@ -1,5 +1,5 @@
 // API endpoint to create a Stripe checkout session for school admin or parent subscriptions, based on role and selected priceId.
-
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { stripe } from '@/lib/stripe';

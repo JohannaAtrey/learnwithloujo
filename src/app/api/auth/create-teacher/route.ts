@@ -1,5 +1,5 @@
 // API endpoint to create a new teacher account, assign a custom role, and store user info in Firestore.
-
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/firebase-admin';
 import { db } from '@/lib/firebase-admin';

@@ -1,5 +1,7 @@
 // API route for school admins to manage teacher accounts: fetch all linked teachers (GET), or add, remove, or create teacher accounts (POST) based on specified actions.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/firebase-admin'; 
 import {

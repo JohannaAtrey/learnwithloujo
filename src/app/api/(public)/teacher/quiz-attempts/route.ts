@@ -1,5 +1,5 @@
 // API route for teachers to fetch completed quiz attempts they assigned, including quiz titles, student names, scores, and timestamps.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { QuizAssignment } from '@/types'; 

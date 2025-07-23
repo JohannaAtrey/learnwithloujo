@@ -1,6 +1,6 @@
 // API endpoint to set up initial school admin role and user document after signup form submission.
 // NOTE: Final role/school linking should be completed by the Stripe webhook after successful payment.
-
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';

@@ -1,5 +1,7 @@
 // API route to import completed songs from the Udio feed, download their audio files, save them locally, and create song records in Firestore if they don't already exist.
 
+export const dynamic = 'force-dynamic';
+
 import { NextResponse } from 'next/server';
 import { getSongByUdioId, createSong } from '@/lib/services/songs';
 import path from 'path';

@@ -1,5 +1,5 @@
 // API route for students to submit answers to a quiz assignment; verifies ownership, calculates score, records submission details (including lateness), and updates Firestore.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { FieldValue } from 'firebase-admin/firestore';

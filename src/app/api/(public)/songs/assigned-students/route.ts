@@ -1,5 +1,7 @@
 // API route to retrieve a list of student UIDs assigned to a specific song, based on the songId query parameter.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/firebase-admin';
 

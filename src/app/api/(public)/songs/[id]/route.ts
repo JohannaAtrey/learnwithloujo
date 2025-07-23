@@ -1,5 +1,7 @@
 // API route for managing individual songs by ID: supports fetching (GET), updating (PATCH), and deleting (DELETE) with role-based access and creator checks.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { getSongById, getSongByUdioId, updateSong, deleteSong } from '@/lib/services/songs';
 import { auth } from '@/lib/firebase-admin';
@@ -7,8 +9,9 @@ import { auth } from '@/lib/firebase-admin';
 // GET endpoint to fetch a specific song by ID
 export async function GET(
   _request: NextRequest,
-  {params } : { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
+  const params = await context.params;
   const { id } = params;
   
   try {

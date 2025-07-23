@@ -1,5 +1,5 @@
 // API route for admins to retrieve the total number of users in Firebase Authentication.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/firebase-admin'; 
 

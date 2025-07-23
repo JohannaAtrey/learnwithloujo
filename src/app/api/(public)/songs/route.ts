@@ -1,5 +1,7 @@
 // API route to fetch all songs from the Firestore database; intended for administrative or internal use.
 
+export const dynamic = 'force-dynamic';
+
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/firebase-admin';
 

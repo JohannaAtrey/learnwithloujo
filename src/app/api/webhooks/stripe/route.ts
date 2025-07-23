@@ -1,7 +1,7 @@
 // Stripe webhook handler for subscription lifecycle events.
 // Handles checkout completion, subscription renewals, and cancellations for school and parent plans.
 // Updates Firebase Auth custom claims and Firestore user documents accordingly.
-
+export const dynamic = 'force-dynamic';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';

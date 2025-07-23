@@ -1,5 +1,7 @@
 // API route to retrieve full details of a specific quiz by ID, including its questions; requires authentication but allows any user role to access.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { QuizData } from '@/types';

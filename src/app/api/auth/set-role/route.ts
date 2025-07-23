@@ -1,5 +1,5 @@
 // API endpoint for admins to assign roles to users via custom claims and update Firestore metadata. Requires Bearer token authorization.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth as adminAuth, db as adminFirestore } from '@/lib/firebase-admin'; 
 

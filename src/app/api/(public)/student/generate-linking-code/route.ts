@@ -1,5 +1,6 @@
 // API route that allows authenticated students to generate a unique, time-limited parent linking code for account association; includes optional school ID support.
 
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { Timestamp } from 'firebase-admin/firestore';

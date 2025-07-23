@@ -1,5 +1,5 @@
 // API route for teachers to fetch quizzes they've created and to create new quizzes, including metadata and questions.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { QuizData } from '@/types';

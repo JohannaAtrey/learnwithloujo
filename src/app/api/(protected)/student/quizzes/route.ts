@@ -1,5 +1,7 @@
 // API route for students to retrieve their assigned quizzes, including quiz details, assignment metadata, and the assigning teacher's name, with support for date formatting.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { QuizAssignment, QuizData } from '@/types';

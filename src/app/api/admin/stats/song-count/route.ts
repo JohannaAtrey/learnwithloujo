@@ -1,5 +1,5 @@
 // API route for admins to retrieve the total count of songs in the database.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 

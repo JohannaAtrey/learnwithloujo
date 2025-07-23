@@ -1,5 +1,7 @@
 // API route allowing teachers or parents to assign a completed song to one or more students, with relationship checks and batch Firestore writes to prevent duplicate assignments.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { getSongById } from '@/lib/services/songs'; 

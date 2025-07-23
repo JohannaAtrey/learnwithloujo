@@ -1,6 +1,6 @@
 // Stripe webhook endpoint for handling subscription lifecycle events such as checkout completion, subscription updates, cancellations, and failed payments.
 // Updates user records in Firestore based on Stripe events.
-
+export const dynamic = 'force-dynamic';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';

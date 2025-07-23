@@ -1,5 +1,5 @@
 // API endpoint to finalize user registration: verifies ID token, assigns secure custom claims, and stores user metadata in Firestore.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth as adminAuth, db } from '@/lib/firebase-admin';
 

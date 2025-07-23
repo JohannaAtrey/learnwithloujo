@@ -1,5 +1,5 @@
 // API route for managing school admin users; allows platform admins to list, promote, demote, or delete school admins.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/firebase-admin'; 
 import {

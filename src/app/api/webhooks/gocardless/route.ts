@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/firebase-admin';
 import crypto from 'crypto';
 import { goCardless } from '@/lib/gocardless';
+export const dynamic = 'force-dynamic';
 
 const webhookSecret = process.env.GOCARDLESS_WEBHOOK_SECRET!;
 

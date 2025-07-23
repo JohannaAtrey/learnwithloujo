@@ -1,5 +1,7 @@
 // API route to initiate a song generation request via the Udio API, enforcing role-based quotas, validating subscriptions, and storing a pending song record in Firestore.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { FieldValue } from 'firebase-admin/firestore';

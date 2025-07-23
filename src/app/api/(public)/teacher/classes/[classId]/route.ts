@@ -1,5 +1,5 @@
 // API route to manage individual classes (GET, PUT, DELETE); allows teachers to retrieve, update, or delete their own class documents with proper validation and access control.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { ClassData } from '@/types';

@@ -1,5 +1,5 @@
 // API route for assigning a quiz to multiple students; allows authenticated teachers to batch-create quiz assignments with optional availability and due dates.
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, db } from '@/lib/firebase-admin';
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';

@@ -1,5 +1,7 @@
 // API route that checks the status of a Udio work item by workId using Udio's feed API, with error handling and no caching. Possibly unused.
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
