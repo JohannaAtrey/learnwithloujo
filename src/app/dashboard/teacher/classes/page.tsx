@@ -15,8 +15,8 @@ export default function ManageClassesPage() {
   const [refreshKey, setRefreshKey] = useState(0); 
 
 
-  const handleClassSaved = (classId: string) => {
-    console.log('Class created/updated:', classId);
+  const handleClassSaved = () => {
+    console.log('Class created/updated');
     setShowCreateForm(false);
     setRefreshKey(prev => prev + 1); 
   };

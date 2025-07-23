@@ -6,8 +6,8 @@ import { auth } from '@/lib/firebase-admin';
 
 // GET endpoint to fetch a specific song by ID
 export async function GET(
-  request: NextRequest,
-  {params } : { params: { id: string } } 
+  _request: NextRequest,
+  {params } : { params: { id: string } }
 ): Promise<NextResponse> {
   const { id } = params;
   

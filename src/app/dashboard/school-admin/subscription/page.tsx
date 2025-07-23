@@ -100,7 +100,8 @@ function SchoolAdminSubscriptionContent() {
                 </Card>
               ) : (
                 <CheckoutButton
-                  priceId={process.env.NEXT_PUBLIC_STRIPE_SCHOOL_PRICE_ID!}
+                  userPlan="Monthly"
+                  userType="school"
                   className="w-full bg-[#e55283] hover:bg-[#e55283]/90"
                 />
               )}

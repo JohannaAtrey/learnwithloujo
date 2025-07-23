@@ -2,11 +2,7 @@ import { downloadAndSaveSong, getSongByWorkId, updateSong } from '@/lib/services
 import { SongData } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
+export const runtime = 'nodejs';
 
 export async function POST(req: NextRequest) {
   try {

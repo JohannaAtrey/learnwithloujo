@@ -19,8 +19,8 @@ interface UdioSongData {
 }
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { workId: string } }  
+  _request: NextRequest,
+  { params }: { params: { workId: string } }
 ): Promise<NextResponse> {
   const { workId } = params;
   if (!workId) {

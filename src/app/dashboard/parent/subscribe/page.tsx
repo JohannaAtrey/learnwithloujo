@@ -91,7 +91,8 @@ function ParentSubscriptionContent() {
                 </Card>
               ) : (
                 <CheckoutButton
-                  priceId={process.env.NEXT_PUBLIC_STRIPE_PARENT_PRICE_ID!}
+                  userPlan="Monthly"
+                  userType="parent"
                   className="w-full bg-[#e55283] hover:bg-[#e55283]/90"
                 />
               )}

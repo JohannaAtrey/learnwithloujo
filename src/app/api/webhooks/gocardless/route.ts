@@ -5,11 +5,7 @@ import { goCardless } from '@/lib/gocardless';
 
 const webhookSecret = process.env.GOCARDLESS_WEBHOOK_SECRET!;
 
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
+export const runtime = 'nodejs';
 
 export async function POST(req: NextRequest) {
   console.log('Gocardless webhook starting.........')
